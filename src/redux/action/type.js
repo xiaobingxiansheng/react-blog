@@ -1,0 +1,3 @@
+export const REQUEST_DATA = "REQUEST_DATA";
+
+export const SET_ARTICLE_META = "SET_ARTICLE_META";
