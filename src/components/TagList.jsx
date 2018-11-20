@@ -2,7 +2,6 @@ import React from 'react'
 import ClassNames from 'classnames'
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {getAndSetArticleMeta, setArticleMeta} from "../redux/action/action";
 import { Link } from "react-router-dom";
 
 import './TagList.less'
@@ -16,9 +15,7 @@ class TagList extends React.Component{
     }
 
     componentDidMount(){
-        if(!this.props.articleMetas.meta || !this.props.articleMetas.meta.size) {
-            this.props.getAndSetArticleMeta();
-        }
+       // TODO: 判断以及初始化
     }
 
     render(){
@@ -26,19 +23,7 @@ class TagList extends React.Component{
         let tags = new Map();
         let tagKeys = new Set();
 
-        for (let value of this.props.articleMetas.meta.values()) {
-            for(let tag of value.tags){
-                tagKeys.add(tag)
-                if(tags.has(tag)){
-                    tags.set(tag, tags.get(tag).concat([value]))
-                } else {
-                    tags.set(tag, [value])
-                }
-            }
-        }
-
-        console.log('tags:', tags);
-        console.log('tagKeys:', tagKeys);
+        // TODO: 设定 tags 和 tagKeys
 
         return (<div>
             <div id='tag_cloud' className="tags">
@@ -70,12 +55,11 @@ class TagList extends React.Component{
 }
 
 const mapStateToProps = (state) => {
-    const { status, articleMetas } = state
-    return { status, articleMetas }
+    const { status } = state
+    return { status }
 }
 const mapDispatchToProps = dispatch => ({
-    setArticleMeta:bindActionCreators(setArticleMeta, dispatch),
-    getAndSetArticleMeta:bindActionCreators(getAndSetArticleMeta, dispatch),
+    // 例如：yourAction:bindActionCreators(yourAction, dispatch),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(TagList)

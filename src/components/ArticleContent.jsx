@@ -18,20 +18,10 @@ class ArticleContent extends React.Component{
     }
 
     componentDidMount(){
-        // const query = queryString.parse(location.search);
-        // console.log('pathName:', query);
 
-        // console.log("this.params:",this.params)
-        // console.log("this.props.match.params:",this.props.match.params)
-
-        console.log("this.props.articleMetas:", this.props.articleMetas);
         const query = this.props.match.params;
 
-        if(this.props.articleMetas.meta && this.props.articleMetas.meta.has(query.pathName)){
-            this.setState({
-                post: this.props.articleMetas.meta.get(query.pathName)
-            })
-        }
+        // TODO: 可以先采用 redux 中的信息
 
         axios.get(`${preURL}/post?pathName=${query.pathName}`).then((response) => {
             console.log(response.data)
@@ -83,11 +73,10 @@ class ArticleContent extends React.Component{
 }
 
 const mapStateToProps = (state) => {
-    const { status, articleMetas } = state
-    return { status, articleMetas }
+    const { status } = state
+    return { status }
 }
 const mapDispatchToProps = dispatch => ({
-    setArticleMeta:bindActionCreators(setArticleMeta, dispatch),
+    // 例如：yourAction:bindActionCreators(yourAction, dispatch),
 })
-
 export default connect(mapStateToProps, mapDispatchToProps)(ArticleContent)

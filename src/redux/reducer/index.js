@@ -11,22 +11,14 @@ const status = (state = { status: 200 }, action) => {
     }
 };
 
-let defaultMeta = new Map();
+let defaultMeta = new Map(); // 可以使用其做为默认
 
-const articleMetas = (state = {meta :defaultMeta}, action) => {
-      switch (action.type){
-          case type.SET_ARTICLE_META:
-              return {
-                  ...state,
-                  ...action.data,
-              };
-          default: return {
-              ...state
-          }
-      }
-};
+/* TODO AND TIP:
 
+这里我们需要定义使用的 Reducer，这里已经给出了一个 reducer 的例子，之后可以使用 combineReducers 进行 export
+
+ */
 export default combineReducers({
     status,
-    articleMetas,
+    // More
 })

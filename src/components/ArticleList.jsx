@@ -8,7 +8,6 @@ import { Link } from "react-router-dom";
 import {connect} from "react-redux";
 
 import { bindActionCreators } from "redux"
-import { setArticleMeta, getAndSetArticleMeta } from '../redux/action/action'
 
 class ArticleList extends React.Component {
     constructor(props) {
@@ -20,9 +19,7 @@ class ArticleList extends React.Component {
     }
 
     componentDidMount(){
-        if(!this.props.articleMetas.meta || !this.props.articleMetas.meta.size) {
-            this.props.getAndSetArticleMeta();
-        }
+        // TODO：拉取数据
     }
 
     nextPage(){
@@ -41,9 +38,7 @@ class ArticleList extends React.Component {
 
         let list = []
 
-        for (let value of this.props.articleMetas.meta.values()) {
-            list.push(value)
-        }
+        // TODO： 设定 list
 
         return (
             <div>
@@ -85,12 +80,11 @@ class ArticleList extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    const { status, articleMetas } = state
-    return { status, articleMetas }
+    const { status } = state
+    return { status }
 }
 const mapDispatchToProps = dispatch => ({
-    setArticleMeta:bindActionCreators(setArticleMeta, dispatch),
-    getAndSetArticleMeta:bindActionCreators(getAndSetArticleMeta, dispatch),
+    // 例如：yourAction:bindActionCreators(yourAction, dispatch),
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(ArticleList)
