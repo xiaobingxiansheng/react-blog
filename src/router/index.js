@@ -14,10 +14,7 @@ const EnterRouter = () => (
         <Layout>
             <Route exact path="/" component={ArticleList} />
             <Route path="/article/:pathName" component={ArticleContent} />
-            <Route path="/feedback" component={FeedbackForm} />
-            <Route path="/tagList" component={TagList} />
-            <Route path="/archive" component={ArchiveList} />
-            <Route path="/about" component={AboutMe} />
+            {/* TODO: 在这里增加必要的路由 */}
         </Layout>
     </Router>
 );

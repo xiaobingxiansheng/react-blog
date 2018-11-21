@@ -40,6 +40,16 @@ module.exports = {
             template: path.join(__dirname, './index.html'),
             chunks: ['index']
         }),
+        new HtmlWebpackPlugin({
+            filename: 'article.html',
+            template: path.join(__dirname, './index.html'),
+            chunks: ['article']
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'feedback.html',
+            template: path.join(__dirname, './index.html'),
+            chunks: ['feedback']
+        })
     ],
     resolve: {
         extensions: ['.js', '.jsx'],

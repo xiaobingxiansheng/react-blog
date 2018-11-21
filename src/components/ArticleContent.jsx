@@ -6,7 +6,6 @@ import {preURL, publicURL} from "../config";
 import moment from "moment/moment";
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
-import {setArticleMeta} from "../redux/action/action";
 const ReactMarkdown = require('react-markdown')
 
 class ArticleContent extends React.Component{
