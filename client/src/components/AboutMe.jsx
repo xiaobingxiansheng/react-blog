@@ -13,7 +13,7 @@ class AboutMe extends React.Component{
         return(
         <div className="post-content">
 
-            这里有一个自我介绍
+            这是我个人使用redux+react-router进行搭建的个人博客
 
         </div>)
     }

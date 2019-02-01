@@ -23,7 +23,7 @@ module.exports = {
                 loader: 'style-loader!css-loader!less-loader'
             },
             {
-                test: /\.(png|jpg|gif)$/,
+                test: /\.(png|jpg|gif|svg)$/,
                 use: [
                     {
                         loader: 'file-loader',
@@ -34,21 +34,10 @@ module.exports = {
         ]
     },
     plugins: [
-        // TODO: 删除无关内容
         new HtmlWebpackPlugin({
             filename: 'index.html',
             template: path.join(__dirname, './index.html'),
             chunks: ['index']
-        }),
-        new HtmlWebpackPlugin({
-            filename: 'article.html',
-            template: path.join(__dirname, './index.html'),
-            chunks: ['article']
-        }),
-        new HtmlWebpackPlugin({
-            filename: 'feedback.html',
-            template: path.join(__dirname, './index.html'),
-            chunks: ['feedback']
         })
     ],
     resolve: {
