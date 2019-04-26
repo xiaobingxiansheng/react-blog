@@ -2,7 +2,7 @@ import {
     combineReducers
 } from "redux"
 import * as type from "../action/type"
-
+import { fetchList } from "./fetchList";
 const status = (state = { status: 200 }, action) => {
     switch (action.type) {
         default: return {
@@ -20,5 +20,6 @@ let defaultMeta = new Map(); // 可以使用其做为默认
  */
 export default combineReducers({
     status,
+    fetchList
     // More
 })

@@ -3,6 +3,7 @@ import ClassNames from 'classnames'
 import {connect} from "react-redux";
 import {bindActionCreators} from "redux";
 import { Link } from "react-router-dom";
+import  { getArticleList as fetchListAction}  from "../redux/action/action"
 
 import './TagList.less'
 
@@ -16,14 +17,20 @@ class TagList extends React.Component{
 
     componentDidMount(){
        // TODO: 判断以及初始化
+       if(this.props.tags.size <= 0 || this.props.tagKeys.size <= 0){
+           this.props.fetchList();
+       }
     }
 
     render(){
 
-        let tags = new Map();
-        let tagKeys = new Set();
+        let tags = this.props.tags;
+        
+
+        let tagKeys = this.props.tagKeys;
 
         // TODO: 设定 tags 和 tagKeys
+        console.log(this.props.tagKeys);
 
         return (<div>
             <div id='tag_cloud' className="tags">
@@ -55,11 +62,25 @@ class TagList extends React.Component{
 }
 
 const mapStateToProps = (state) => {
-    const { status } = state
-    return { status }
+    const { status, fetchList:{data} } = state
+    const tags = new Map();
+    const tagKeys = new Set();
+    for(var [index, idata] of data){
+        idata.tags.forEach((innerTag, index)=>{
+            tagKeys.add(innerTag)
+            if(tags.has(innerTag)){
+                tags.set(innerTag, tags.get(innerTag).concat([idata]));
+            }else{
+                tags.set(innerTag, [idata])
+            }
+        })
+    }
+    return { status , tagKeys , tags}
 }
 const mapDispatchToProps = dispatch => ({
     // 例如：yourAction:bindActionCreators(yourAction, dispatch),
+    fetchList: bindActionCreators(fetchListAction, dispatch)
 })
+
 
 export default connect(mapStateToProps, mapDispatchToProps)(TagList)

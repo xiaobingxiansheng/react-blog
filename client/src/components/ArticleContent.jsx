@@ -17,18 +17,33 @@ class ArticleContent extends React.Component{
     }
 
     componentDidMount(){
-
+        
         const query = this.props.match.params;
-
+        const propsPostMeta = this.props.propsPostMeta;
+        console.log(propsPostMeta);
         // TODO: 可以先采用 redux 中的信息
+        this.setState({
+            post:Object.assign({}, this.state.post, {
+                ...propsPostMeta
+            })
+        })
 
         axios.get(`${preURL}/post?pathName=${query.pathName}`).then((response) => {
-            console.log(response.data)
-            this.setState({
-                post:response.data
-            })
+            console.log("state", this.state)
+            setTimeout(()=>{
+                this.setState({
+                    post:Object.assign({}, this.state.post, {
+                        ...response.data
+                    })
+                })
+            }, 2000)
         },(error) => {
             alert('拉取数据失败，请配置后端博客服务！')
+            this.setState({
+                post:Object.assign({}, this.state.post, {
+                    _content: '拉取数据失败，请配置后端博客服务！' 
+                })
+            })
         })
     }
 
@@ -71,9 +86,11 @@ class ArticleContent extends React.Component{
     }
 }
 
-const mapStateToProps = (state) => {
-    const { status } = state
-    return { status }
+const mapStateToProps = (state, ownProps) => {
+    const { status, fetchList:{ data } } = state;
+    
+    // return { status, data.get(ownProps.match.params.pathName)};
+    return { status, propsPostMeta:data.get(ownProps.match.params.pathName), data};
 }
 const mapDispatchToProps = dispatch => ({
     // 例如：yourAction:bindActionCreators(yourAction, dispatch),

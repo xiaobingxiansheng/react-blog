@@ -1,12 +1,14 @@
 import * as type from "./type"
-import {preURL} from "../../config";
+import {
+    preURL
+} from "../../config";
 import axios from "axios/index";
 
 /*
-* 将异步请求抽离到 action 的好处：
-* 一方面可以抽离组件代码，并且组件之间更方便地共享数据
-* 另外一方面可以让请求发送不再被组件生命周期影响，也可以有效节流
-* */
+ * 将异步请求抽离到 action 的好处：
+ * 一方面可以抽离组件代码，并且组件之间更方便地共享数据
+ * 另外一方面可以让请求发送不再被组件生命周期影响，也可以有效节流
+ * */
 
 /* TODO AND TIP:
 
@@ -19,3 +21,37 @@ import axios from "axios/index";
         articleMeta.set(item.pathName, item)
     }
 */
+export function getArticleList() {
+    return (dispatch) => {
+        dispatch({
+            type: type.REQUEST_ARTICLELIST_DATA,
+            payload: {
+                status:"loadding"
+            }
+        });
+        axios.get(`${preURL}/list`)
+            // .then((res) => res.json())
+            .then((res) => {
+                var articleMeta = new Map;
+                for(let item of res.data){
+                    articleMeta.set(item.pathName, item)
+                }
+                dispatch({
+                    type: type.REQUEST_ARTICLELIST_DATA,
+                    payload: {
+                        data: articleMeta,
+                        status: "success"
+                    }
+                })
+            },(errorMsg) => {
+                dispatch({
+                    type: type.REQUEST_ARTICLELIST_DATA,
+                    payload: {
+                        errorMsg,
+                        status: "failed"
+                    }
+                })
+            })
+    }
+}
+

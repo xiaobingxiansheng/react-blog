@@ -11,12 +11,13 @@ module.exports = {
         path: path.join(__dirname, './dist'),
         filename: '[name].min.js'
     },
+    devtool:'inline-source-map',
     module: {
         rules: [
             {
                 test: /\.jsx?$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader'
+                loader: 'babel-loader?cacheDirectory=true'
             },
             {
                 test: /\.less$/,

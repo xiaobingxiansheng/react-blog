@@ -11,10 +11,16 @@ class Nav extends React.Component{
         this.state = {
 
         }
+        this.isMatchRouterPathName = this.isMatchRouterPathName.bind(this);
     }
 
     componentDidMount(){
         console.log('nav props:', this.props);
+    }
+
+    //  判断路由路径是否是对应入参路径
+    isMatchRouterPathName(pathName){
+        return this.props.location.pathname.indexOf(pathName) > -1;
     }
 
     render(){
@@ -32,31 +38,31 @@ class Nav extends React.Component{
                 </div>
                 <div className="contents" id="nav-content">
                     <ul>
-                        <li className={ClassNames({'active': this.props.location.pathname === '/'})}>
-                            <Link to={'/'}>
+                        <li className={ClassNames({'active': this.isMatchRouterPathName('/articleList')})}>
+                            <Link to={'/articleList'}>
                                 <i className="iconfont icon-shouye1"></i>
                                 <span>首页</span>
                             </Link>
                         </li>
-                        <li className={ClassNames({'active': this.props.location.pathname === '/tagList'})}>
+                        <li className={ClassNames({'active': this.isMatchRouterPathName('/tagList')})}>
                             <Link to={'/tagList'}>
                                 <i className="iconfont icon-biaoqian1"></i>
                                 <span>标签</span>
                             </Link>
                         </li>
-                        <li className={ClassNames({'active': this.props.location.pathname === '/archive'})}>
+                        <li className={ClassNames({'active': this.isMatchRouterPathName('/archive')})}>
                             <Link to={'/archive'}>
                                 <i className="iconfont icon-guidang1"></i>
                                 <span>归档</span>
                             </Link>
                         </li>
-                        <li className={ClassNames({'active': this.props.location.pathname === '/about'})}>
+                        <li className={ClassNames({'active': this.isMatchRouterPathName('/about')})}>
                             <Link to={'/about'}>
                                 <i className="iconfont icon-guanyu1"></i>
                                 <span>关于</span>
                             </Link>
                         </li>
-                        <li className={ClassNames({'active': this.props.location.pathname === '/feedback'})}>
+                        <li className={ClassNames({'active': this.isMatchRouterPathName('/feedback')})}>
                             <Link to={'/feedback'}>
                                 <i className="iconfont icon-guanyu1"></i>
                                 <span>反馈</span>

@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from '../container/layout/Layout'
-import { HashRouter as Router, Route, Link, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Redirect, Switch } from "react-router-dom";
 
 import ArticleContent from '../components/ArticleContent'
 import ArticleList from '../components/ArticleList'
@@ -12,9 +12,11 @@ import NoMatch from "../components/NoMatch";
 
 const EnterRouter = () => (
     <Router>
-        <Layout>
+        <Layout>    
             <Switch>
-                <Route exact path="/" component={ArticleList} />
+                <Redirect exact from='/' to='/articleList/0' component={ArticleList} />
+                <Redirect exact from='/(articleList)' to='/articleList/0' component={ArticleList} />
+                <Route path="/articleList/:pageIndex(\d\d?)" component={ArticleList} />
                 <Route path="/article/:pathName" component={ArticleContent} />
                 <Route path="/tagList" component={TagList} />
                 <Route path="/archive" component={ArchiveList} />

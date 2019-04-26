@@ -6,4 +6,5 @@ export const REQUEST_DATA = "REQUEST_DATA";
 
 */
 
-
+// 请求文章列表action type
+export const REQUEST_ARTICLELIST_DATA = "REQUEST_ARTICLELIST_DATA";
