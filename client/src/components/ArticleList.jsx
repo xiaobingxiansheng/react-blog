@@ -14,7 +14,6 @@ class ArticleList extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            list:[],
             pageIndex:0,
             pageSize: 8
         }
@@ -23,7 +22,6 @@ class ArticleList extends React.Component {
 
     static getDerivedStateFromProps(nextProps, prevState) {
         return {
-            list: [...nextProps.list.data.values()],
             pageIndex: +nextProps.match.params.pageIndex
         };
     }
@@ -36,26 +34,25 @@ class ArticleList extends React.Component {
 
     // 计算列表显示范围
     computerPageRange(){
-        const MAX_COUNT_LENGTH = this.state.list.length;
+        const MAX_COUNT_LENGTH = this.props.data.size;
         let { pageIndex } = this.props.match.params;
         let firstPage = pageIndex * this.state.pageSize;
         let endPage = Math.min(firstPage + this.state.pageSize, MAX_COUNT_LENGTH);
         console.log(firstPage, endPage)
         return {firstPage, endPage};
-        // let endPage = 
     }
 
     render() {
 
         let computerPageRangeObj = this.computerPageRange()
-        let list = this.state.list.slice(computerPageRangeObj.firstPage, computerPageRangeObj.endPage);
+        let visiblityList = Array.from(this.props.data.values()).slice(computerPageRangeObj.firstPage, computerPageRangeObj.endPage);
         // console.log(list)
         // // TODO： 设定 list
         return (
 
-            list.length>0?<div>
+            visiblityList.length>0?<div>
                 <div className="post-preview-container">
-                    {list.map((item, index) =>
+                    {visiblityList.map((item, index) =>
                         <div className={"post-preview"} key={index}>
                             <div className={"post-time"}>
                                 {moment(item.date).format('YYYY-MM-DD')}
@@ -84,18 +81,18 @@ class ArticleList extends React.Component {
                     </li>
 
                     {/* <li className={ClassNames("next",{'hidden': this.state.begin + this.state.pageSize >= list.length })}  onClick={() => {this.nextPage()}}> */}
-                    <li className={ClassNames("next",{'hidden': computerPageRangeObj.endPage >= this.state.list.length })}>
+                    <li className={ClassNames("next",{'hidden': computerPageRangeObj.endPage >= this.props.data.size })}>
                         <Link to={'./'+(this.state.pageIndex+1)}>Older Posts &rarr;</Link>
                     </li>
                 </ul>
-            </div>:(this.props.list.isLoadding?<div className="post-preview-container">加载中..</div>:<NoMatch />)
+            </div>:(this.props.isLoadding?<div className="post-preview-container">加载中..</div>:<NoMatch />)
         )
     }
 }
 
 const mapStateToProps = (state) => {
-    const { status, fetchList: list} = state
-    return { status, list}
+    const { status, fetchList} = state
+    return { status, ...fetchList}
 }
 const mapDispatchToProps = dispatch => ({
     // 例如：yourAction:bindActionCreators(yourAction, dispatch),
