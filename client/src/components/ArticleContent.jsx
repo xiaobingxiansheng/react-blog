@@ -78,7 +78,7 @@ class ArticleContent extends React.Component{
 
 
                 <div className={'post-content'}>
-                    <ReactMarkdown source={this.state.post._content} />
+                    {this.state.post._content?<ReactMarkdown source={this.state.post._content} />:"加载中..."}
                 </div>
 
             </div>
